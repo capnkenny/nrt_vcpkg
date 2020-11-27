@@ -379,6 +379,7 @@ $arguments = (
 "/verbosity:minimal",
 "/m",
 "/nologo",
+"/maxcpucount:10",
 "`"$vcpkgSourcesPath\dirs.proj`"") -join " "
 
 function vcpkgInvokeCommandClean()
