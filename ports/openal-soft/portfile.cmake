@@ -27,6 +27,8 @@ if(VCPKG_TARGET_IS_WINDOWS)
     set(ALSOFT_REQUIRE_LINUX OFF)
 endif()
 
+set(CMAKE_BUILD_PARALLEL_LEVEL)
+
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     OPTIONS
