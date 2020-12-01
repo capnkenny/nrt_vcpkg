@@ -1,6 +1,6 @@
 # Vcpkg
 
-**PLEASE NOTE - THIS IS A BROKEN FORK FROM [https://github.com/microsoft/vcpkg] - if you want the full tool, please go there and check it out!
+**PLEASE NOTE - This is a broken fork from (Microsoft)[https://github.com/microsoft/vcpkg] - if you want the full tool, please go there and check it out!
 
 ## Overview
 Vcpkg helps you manage C and C++ libraries on Windows, Linux and MacOS. This tool and ecosystem are constantly evolving; your involvement is vital to its success!
