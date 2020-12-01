@@ -14,20 +14,23 @@ jobs:
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: 'Checkout code'
+      - name: 'Checkout Code'
         uses: actions/checkout@v2
       - name: 'Bootstrap vcpkg'
         run: '%GITHUB_WORKSPACE%/bootstrap-vcpkg.bat'
         shell: cmd
-      - name: 'Install NovelRT dependencies'
+      - name: 'Install NovelRT Dependencies'
         run: '%GITHUB_WORKSPACE%/vcpkg.exe install freetype glfw3 glm gtest libsndfile lua openal-soft spdlog --triplet x64-windows'
         shell: cmd
-      - name: 'Export dependencies'
-        run: '%GITHUB_WORKSPACE%/vcpkg.exe export freetype:x64-windows glfw3:x64-windows glm:x64-windows gtest:x64-windows libsndfile:x64-windows lua:x64-windows openal-soft:x64-windows spdlog:x64-windows --zip'
+      - name: 'Export Dependencies'
+        run: '%GITHUB_WORKSPACE%/vcpkg.exe export freetype:x64-windows glfw3:x64-windows glm:x64-windows gtest:x64-windows libsndfile:x64-windows lua:x64-windows openal-soft:x64-windows spdlog:x64-windows --raw --output=vcpkg'
         shell: cmd
-      - name: 'Rename zip file'
-        run: "Get-ChildItem *.zip | Rename-Item -NewName { $_.Name -replace 'vcpkg-(.*).zip', 'NovelRTDeps.zip' }"
+      - name: 'Create Zip File for Release'
+        run: "Compress-Archive -Path ./vcpkg -DestinationPath ./NovelRTDeps.zip"
         shell: powershell
+      - name: "Get current date"
+        id: date
+        run: echo "name=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -35,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
